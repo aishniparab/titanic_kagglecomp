@@ -51,7 +51,8 @@ for train_i, test_i in kf:
   # Separate data into training and testing sets.
   cd_train, cd_test = crunched_data.iloc[train_i], crunched_data.iloc[test_i]
   f_train, f_test = fate[train_i], fate[test_i]
-  # Train and predict with SVM.
+  # Train and predict with DT Regressor.
+  # Should we use DT Classifier?
   regr_1 = DecisionTreeRegressor(max_depth=2)
   regr_2 = DecisionTreeRegressor(max_depth=5)
   regr_1.fit(cd_train, f_train)
