@@ -18,7 +18,7 @@ data = np.array(data)
 #print(data)
 
 df = pd.read_csv('train.csv', header = 0)
-print(df.describe())
+#print(df.describe())
 
 #SCIKIT STUFF
 #Should we include Survived in crunched_data?
@@ -52,14 +52,25 @@ regr_2.fit(crunched_data, fate)
 #regr_2.fit(fate, crunched_data)
 
 #X_test = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]
-y_1 = regr_1.predict(fate)
-y_2 = regr_2.predict(fate)
+y_1 = regr_1.predict(crunched_data)
+y_2 = regr_2.predict(crunched_data)
+
+
+l = list()
+for pred in y_1:
+  if pred > 0.5:
+    l.append(1)
+  else:
+    l.append(0)
 
 plt.figure()
 
-plt.scatter(crunched_data, fate, c="k", label="data")
-plt.plot(X_test, y_1, c="g", label="max_depth=2", linewidth=2)
-plt.plot(X_test, y_2, c="r", label="max_depth=5", linewidth=2)
+print(crunched_data.size, fate.size)
+
+#plt.scatter(crunched_data, fate, c="k", label="data")
+plt.scatter(df['PassengerId'], fate, c="k", label="data")
+plt.plot(df['PassengerId'], l, c="g", label="max_depth=2", linewidth=2)
+#plt.plot(df['PassengerId'], y_2, c="r", label="max_depth=5", linewidth=2)
 plt.xlabel("data")
 plt.ylabel("target")
 plt.title("Decision Tree Regression")
